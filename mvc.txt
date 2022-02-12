@@ -1,0 +1,1184 @@
+program 1 done:-----------------------------------------------------------------------------------------------------------
+
+for controller:                                                    for view:
+                                                  
+using Microsoft.AspNetCore.Mvc;
+using System;                                                    <h1>welcome to .NET-CORE application</h1>
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class HomeController1 : Controller
+    {
+        public IActionResult Index()
+        {
+            return View();
+        }
+}
+        
+    }
+
+program 2 done:--------------------------------------------------------------------------------------------------------------
+
+for controller:                                                      for view:                          
+
+using Microsoft.AspNetCore.Mvc;                                           <h3>
+                                                                                Date:@ViewData["info1"]  <br />
+                                                                                Product_Details:@ViewData["prodet"]
+                                                                            </h3>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class HomeController1 : Controller
+    {
+
+        public IActionResult Index()
+        {
+            ViewData["info1"] = System.DateTime.Now.ToLongDateString();
+            ViewData["prodet"] = "P001,Laptop,76000";
+            return View();
+        }
+}
+}
+
+
+program 3 done:--------------------------------------------------------------------------------------------------------------------
+
+for controller:                                                    
+
+using Microsoft.AspNetCore.Mvc;                                        
+using System;                                             
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class HomeController1 : Controller
+    {
+
+        public IActionResult Index()
+        {
+            webapplication1 obj = new webapplication1();
+            obj.cid = 1;
+            obj.cname = "XXX";
+            obj.Email = "xxx@yahoo.com";
+            return View(obj);
+        }
+
+    }}
+
+                                                                   
+ for view:
+                                                                
+  @model WebApplication1.Models.webapplication1
+    <h3>Customer Details</h3>                                                              
+                                                                    
+                                                                      
+<ul>
+ <li>Cid:@Model.cid</li>
+                                                                          
+ <li> Cname:@Model.cname</li>
+                                                                    
+  <li>CEmail:@Model.Email  </li>   
+                                                                                                                                   
+      </ul> 
+
+
+for model class:
+
+namespace WebApplication1.Models
+{
+    public class webapplication1
+    {
+        public int cid { get; set; }
+        public string cname { get; set; }
+        public string Email { get; set; }
+    }
+}                                                                  
+
+program 4 error:*************************************************************************************************************
+
+for controller:
+
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class HomeController1 : Controller
+    {
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult addnos()
+        {
+            int x = int.Parse(Request.Form["no1"].ToString());
+            int y = int.Parse(Request.Form["no2"].ToString());
+            int z = x + y;
+            ViewData["sum"] = z;
+            ViewData["no1"] = x;
+            ViewData["no2"] = y;
+            return View("addform");
+        }
+    }
+}
+
+for view:
+
+<form method="post" action="addnos">
+    <h2>Addition of Numbers</h2>
+    Enter First Number: <input type="text" name="no1" value="@ViewData["no1"]" /> <br />
+    Enter Second Number: <input type="text" name="no2" value="@ViewData["no2"]"/> <br />
+    <input type="submit" value="Add" /> <br />
+    Sum of 2 nos: <input type="text" name="no3" value="@ViewData["sum"]"/> <br />
+</form>
+
+program 5 done:---------------------------------------------------------------------------------------------------------------------
+for controller:
+
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class HomeController1 : Controller
+    {
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult validatelogin()
+        {
+            webapplication1 obj = new webapplication1();
+            obj.username = Request.Form["txtuname"].ToString();
+            obj.password = Request.Form["txtpword"].ToString();
+
+            if (obj.username == "scott" && obj.password == "scott123")
+                ViewData["res"] = "Login success";
+            else
+                ViewData["res"] = "Login failed";
+            return View("Loginform");
+        }
+    }
+}
+
+for view:
+
+<form method="post" action="validatelogin">
+    <h2>Login Details</h2>
+    Enter UserName: <input type="text" name="txtuname" /> <br />
+    Enter Password: <input type="password" name="txtpword" /> <br />
+    <input type="submit" value="Login" /> <br />
+    <label>@ViewData["res"]</label>
+</form>
+
+for model class:
+namespace WebApplication1.Models
+{
+    public class webapplication1
+    {
+        public string username { get; set; }
+        public string password { get; set; }
+    }
+}
+
+
+program 6(a) done:-----------------------------------------------------------------------------------------------------------------
+for controller:
+
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class HomeController1 : Controller
+    {
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult displaydet()
+        {
+            webapplication1 cobj = new webapplication1();
+            cobj.cid = int.Parse(Request.Form["t1"].ToString());
+            cobj.cname = (Request.Form["t2"].ToString());
+            cobj.Email = Request.Form["t3"].ToString();
+            return View(cobj);
+        }
+    }
+}
+
+
+for view:
+
+<form method="post" action="displaydet">
+    <h2>Customer Details</h2>
+    Enter Cid: <input type="text" name="t1" /> <br />
+    Enter CName: <input type="text" name="t2" /> <br />
+    Enter CEmail: <input type="text" name="t3" /> <br />
+    <input type="submit" value="submit"/>
+</form>
+
+for model class:
+
+namespace WebApplication1.Models
+{
+    public class webapplication1
+    {
+        public int cid { get; set; }
+        public string cname { get; set; }
+        public string Email { get; set; }
+    }
+}
+
+
+program 6(b) error:*************************************************************************************************************
+for controller:
+
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebApplication1.Models;
+
+namespace WebApplication1.Controllers
+{
+    public class HomeController1 : Controller
+    {
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult printempdet()
+        {
+            webapplication1 obj = new webapplication1();
+            obj.eid = 1;
+            obj.ename = "xxx";
+            obj.desig = "HR-MANAGER";
+            obj.dtobj.dname = "HR-DEPT";
+            obj.dtobj.noemp = 5;
+
+            return View(obj);
+        }
+    }
+}
+
+for view:
+@model WebApplication1.Models.webapplication1
+
+<h3>Emp_Dept Details</h3>
+
+<ul>
+    <li>
+        EmpId:@Model.eid
+    </li>
+    <li>
+        Ename:@Model.ename
+    </li>
+    <li>
+        Edesig:@Model.desig
+    </li>
+    <li>
+        DeptName:@Model.dtobj.dname
+    </li>
+    <li>
+        Noofemp:@Model.dtobj.noemp
+    </li>
+</ul>
+
+<table border="2px solid blue" style="background-color:azure;" cellpadding="20px">
+    <tr>
+        <td>EmpId</td>
+        <td>@Model.eid</td>
+    </tr>
+    <tr>
+        <td>EmpName</td>
+        <td>@Model.ename</td>
+    </tr>
+    <tr>
+        <td>EmpDesig</td>
+        <td>@Model.desig</td>
+    </tr>
+    <tr>
+        <td>Dept_name</td>
+        <td>@Model.dtobj.dname</td>
+    </tr>
+    <tr>
+        <td>Noofemp</td>
+        <td>@Model.dtobj.noemp</td>
+    </tr>
+</table>
+
+
+for model class:
+namespace WebApplication1.Models
+{
+    public class webapplication1
+    { 
+    public webapplication1()
+
+    {
+        dtobj = new Dept();
+    }
+    public int eid { get; set; }
+    public string ename { get; set; }
+    public string desig { get; set; }
+    public Dept dtobj { get; set; }
+     }
+
+    public class Dept
+    {
+    public string dname { get; set; }
+    public int noemp { get; set; }
+    }
+}
+    
+program 7 done:------------------------------------------------------------------------------------------------------------------
+for controller:
+
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using WebApplication1.Models;
+using WebApplication1.ViewModel;
+
+namespace WebApplication1.Controllers
+{
+    public class HomeController1 : Controller
+    {
+
+        public IActionResult Index()
+        {
+            webapplication1 st = new webapplication1() { Regno = 1, name = "Sam", Mailid = "sam@yahoo.co.in" };
+            webapplication2 cs = new webapplication2() { cname = "FULL STACK .NET", cdur = 4 };
+
+            webapplication3 csobj = new webapplication3()
+            {
+                webapplication1obj = st,
+                webapplication2obj = cs
+            };
+            return View(csobj);
+        }
+
+    }
+}
+
+for view:
+
+<h3> student_course Detail</h3>
+
+<table border="2px solid blue" style="background-color:azure;" cellpadding="20px">
+    <tr>
+        <td>Regno</td>
+        <td>@Model.webapplication1obj.Regno</td>
+    </tr>
+    <tr>
+        <td>studentName</td>
+        <td>@Model.webapplication1obj.name</td>
+    </tr>
+    <tr>
+        <td>EMailId:</td>
+        <td>@Model.webapplication1obj.Mailid</td>
+    </tr>
+    <tr>
+        <td>Course_NAME</td>
+        <td>@Model.webapplication2obj.cname</td>
+    </tr>
+    <tr>
+        <td>Course_duration</td>
+        <td>@Model.webapplication2obj.cdur</td>
+    </tr>
+</table>
+
+for model class:
+
+using WebApplication1.Models;
+
+namespace WebApplication1.Models
+{
+    public class webapplication1
+    {
+        public int Regno { get; set; }
+        public string name { get; set; }
+        public string Mailid { get; set; }
+    }
+}
+namespace WebApplication1.Models
+{
+    public class webapplication2
+    {
+        public string cname { get; set; }
+        public int cdur { get; set; }
+    }
+}
+namespace WebApplication1.ViewModel
+{
+    public class webapplication3
+    {
+        public webapplication1 webapplication1obj { get; set; }
+        public webapplication2 webapplication2obj { get; set; }
+    }
+
+}
+---------------------------------------------------------------------------------------------------------------------------------
+Content returning result
+---------------------------------------------------------------------------------------------------------------------------------
+Viewresult
+
+ public ViewResult printdet()
+        {
+            return View("Index");
+        }
+----------------------------------------------------------------------------------------------------------------------------------
+contentresult
+-----------------------------------------------------------------------------------------------------------------------------------
+public ContentResult printdet1()
+        {
+            return Content("<h1>welcome to content result</h1>","text/html");
+        }
+----------------------------------------------------------------------------------------------------------------------------------
+emptyresult
+--------------------------------------------------------------------------------------------------------------------------------
+  public EmptyResult printdet()
+        {
+             return new EmptyResult();
+        }
+
+----------------------------------------------------------------------------------------------------------------------------------
+jsonresult
+--------------------------------------------------------------------------------------------------------------------------------
+  public JsonResult printdet1()
+        {
+            Customer obj = new Customer() { cid=1,cname="Ann",Email="ann@gmail.com" };
+            return Json(obj);
+        }
+------------------------------------------------------------------------------------------------------------------------------------
+partialviewresult
+---------------------------------------------------------------------------------------------------------------------------------
+public PartialViewResult printdet()
+        {
+            return PartialView("_PartialView1");
+        }
+
+-----------------------------------------------------------------------------------------------------------------------------------
+fileresult
+------------------------------------------------------------------------------------------------------------------------------------
+ public FileContentResult getfile()
+        {
+            string path = "C:/Users/Dhanraj/Downloads/Topics for Training.pdf";
+            byte[] file = System.IO.File.ReadAllBytes(path);
+
+            return new FileContentResult(file, "application/pdf");
+        }
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+
+program 8 done:-----------------------------------------------------------------------------------------------------------------------
+for controller:
+
+using cg_mvc_core.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace cg_mvc_core.Controllers
+{
+    public class exampleController : Controller
+    {
+        public IActionResult form1()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult form1(string t1, string t2, string chk1)
+        {
+            ViewData["fname"] = t1;
+            ViewData["lname"] = t2;
+            if (chk1 != null)
+                ViewData["workexp"] = "Fresher";
+            else
+                ViewData["workexp"] = "Experienced";
+            return View();
+        }
+    }
+}
+
+for view:
+<form method="post" action="form1">
+    Enter Fname:<input type="text" name="t1" /> <br />
+    Enter Lname:<input type="text" name="t2" /> <br />
+    Fresher ?:<input type="checkbox" name="chk1"/> <br />
+    <input type="submit" value="Submit" />
+</form>
+
+<strong>
+    Fname:@ViewData["fname"] <br />
+    Lname:@ViewData["lname"] <br />
+    Work Experience:@ViewData["workexp"]
+</strong>
+
+for model class:
+
+namespace cg_mvc_core.Models
+{
+    public class employee
+    {
+        public string Fname { get; set; }
+        public string Lname { get; set; }
+        public Boolean workexp { get; set; }
+    }
+}
+
+program 9 done:-------------------------------------------------------------------------------------------------------------------
+for controller:
+
+using cg_mvc_core.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace cg_mvc_core.Controllers
+{
+    public class exampleController : Controller
+    {
+        public IActionResult form2()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult form2(studet stobj)
+        {
+            ViewData["fname"] = stobj.Fname;
+            ViewData["lname"] = stobj.Lname;
+            if (stobj.workexp == true)
+                ViewData["workexp"] = "Fresher";
+            else
+                ViewData["workexp"] = "Exp";
+            return View();
+        }
+    }
+}
+
+for view:
+
+
+@model cg_mvc_core.Models.studet
+
+@using (Html.BeginForm("form2", "Example", FormMethod.Post))
+{
+    <label>Enter Fname:</label>
+    @Html.TextBoxFor(x => x.Fname)
+    <br />
+
+    <label>Enter Lname:</label>
+    @Html.TextBoxFor(x => x.Lname)
+    <br />
+
+    <label>Fresher?:</label>
+    @Html.CheckBoxFor(m=>m.workexp)
+    <br />
+
+    <input type="submit" value="Submit"/>
+}
+
+<b>
+    Fname:@ViewData["fname"] <br />
+    Lname:@ViewData["lname"] <br />
+    Work Experience:@ViewData["workexp"]
+</b>
+
+for model class:
+
+namespace cg_mvc_core.Models
+{
+	public class studet
+	{
+		public string Fname { get; set; }
+		public string Lname { get; set; }
+		public Boolean workexp { get; set; }
+	}
+}
+
+
+program 10 done:----------------------------------------------------------------------------------------------------------------
+for controller:
+
+using cg_mvc_core.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace cg_mvc_core.Controllers
+{
+    public class exampleController : Controller
+    {
+        public IActionResult regform()
+        {
+            return View();
+        }
+    }
+}
+ 
+for view:
+
+@using (Html.BeginForm("regform", "Example"))
+{
+    <label>Enter Username:</label>
+    @Html.TextBox("Username")
+    <br />
+    <br />
+
+    <label>Enter Password:</label>
+    @Html.Password("Password")
+    <br />
+    <br />
+
+    <label>Select Gender:</label>
+    @Html.RadioButton("Gender", "M")
+    <label>Male</label>
+
+    @Html.RadioButton("Gender", "F")
+    <label>Female</label>
+    <br />
+    <br />
+
+
+    <label>Select Qualification:</label>
+    @Html.CheckBox("Course", true) <label>BE/Btech</label>
+
+    @Html.CheckBox("Course", false) <label>ME/Mtech</label>
+
+    @Html.CheckBox("Course", false) <label>PHd</label>
+
+    <br />
+    <br />
+
+    <label>Select City:</label>
+    @Html.DropDownList("city", new List<SelectListItem> {
+       new SelectListItem{Text="<-select->",Value="0"},
+      new SelectListItem{Text="Bangalore",Value="1"},
+      new SelectListItem{Text="Pune",Value="2"},
+       new SelectListItem{Text="Hyderabad",Value="3"},
+        new SelectListItem{Text="Delhi",Value="4"}
+    })
+    
+    <br />
+    <br />
+       }
+    <br />
+    <br />
+
+    <label>Enter Address:</label>
+    @Html.TextArea("address", new { cols = 25, rows = 5 })
+
+    <br />
+    <br />
+
+    <input type="submit" value="Register" />
+
+    @Html.ActionLink("Login", "form1")
+}
+
+for model class: (not necessary for this execution)
+namespace cg_mvc_core.Models
+{
+    public class userdata
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Gender { get; set; }
+        public string Course { get; set; }
+        public string City { get; set; }
+        public string Address{ get; set; }
+    }
+}
+
+program 11 done:------------------------------------------------------------------------------------------------------------------
+for controller:
+
+using cg_mvc_core.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace cg_mvc_core.Controllers
+{
+    public class exampleController : Controller
+    {
+        public IActionResult form3()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult form3(logindata det)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View();
+        }
+    }
+}
+
+for view:
+
+@model cg_mvc_core.Models.logindata
+
+<h2>Login Details</h2>
+
+@using (Html.BeginForm("form3", "Example", FormMethod.Post))
+{
+    <label>Enter Username:</label>
+    @Html.TextBoxFor(x => x.Username)
+    @*@Html.ValidationMessageFor(x => x.Username)*@
+    <br />
+
+    <label>Enter Password:</label>
+    @Html.PasswordFor(x => x.Password)
+    @*@Html.ValidationMessageFor(x => x.Password)*@
+    <br />
+
+    <label>EmaliId:</label>
+    @Html.TextBoxFor(x => x.EmailId)
+    @*@Html.ValidationMessageFor(x => x.EmailId)*@
+    <br />
+
+    <input type="submit" value="Login" />
+    @Html.ValidationSummary(false);
+}
+
+for model class:
+
+using System.ComponentModel.DataAnnotations;
+
+namespace cg_mvc_core.Models
+{
+	
+        public class logindata
+        {
+            [Required(ErrorMessage = "Please enter Username")]
+            public string Username { get; set; }
+
+            [Required(ErrorMessage = "Please enter Password")]
+            public string Password { get; set; }
+
+            [Required(ErrorMessage = "Please enter MailId")]
+            [EmailAddress(ErrorMessage = "Invalid MailId")]
+            public string EmailId { get; set; }
+        }
+}
+
+program 12 done:------------------------------------------------------------------------------------------------------------------
+for controller:
+
+using cg_mvc_core.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace cg_mvc_core.Controllers
+{
+    public class exampleController : Controller
+    {
+        public IActionResult printradio()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult printradio(userdata obj)
+        {
+            ViewData["type"] = obj.JobType;
+            ViewData["mode"] = obj.JobMode;
+            return View();
+        }
+    }
+}
+
+for view:
+@model cg_mvc_core.Models.userdata
+
+<h3>Job Details</h3>
+
+@using (Html.BeginForm("radiobutton", "Example"))
+{
+    <label>Select JobType:</label>
+    @Html.RadioButtonFor(x => x.JobType, "Fulltime")
+    <label>Fulltime</label>
+
+    @Html.RadioButtonFor(x => x.JobType, "Parttime")
+    <label>Parttime</label>
+
+    <br />
+    <br />
+
+    <label>Select JobMode:</label>
+    @Html.RadioButtonFor(x => x.JobMode, "Online")
+    <label>Online</label>
+
+    @Html.RadioButtonFor(x => x.JobMode, "offline")
+    <label>offline</label>
+
+    <br />
+    <br />
+    <input type="submit" value="Submit" />
+}
+
+<b>
+    JobType:@ViewData["type"] <br />
+    JobMode:@ViewData["mode"]
+</b>
+
+for model class:
+
+namespace cg_mvc_core.Models
+{
+    public class userdata
+    {
+
+
+        public string JobType { get; set; } //Fulltime/parttime
+        public string JobMode { get; set; } //Online/offline
+    }
+}
+
+    
+program 13 done:------------------------------------------------------------------------------------------------------------------
+for controller:
+
+using cg_mvc_core.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+
+namespace cg_mvc_core.Controllers
+{
+    public class exampleController : Controller
+    {
+        public IActionResult dispcheck()
+        { return View();
+        }
+        [HttpPost]
+        public IActionResult dispcheck(citymodel obj, object v)
+        {
+            StringBuilder str = new StringBuilder();
+            foreach (var city in obj.cities)
+            { if (city.ischecked)
+                { str.Append(city.text + ",");
+                }
+            }
+
+            ViewData["jobloc"] = str;
+            return View("joblocation");
+        }
+        public IActionResult createcookie()
+        {
+            string username = Request.Cookies["username"];
+            return View("createcookie", username);
+        }
+(to create cookie)
+        [HttpPost]
+        public IActionResult createcookie(string t1)
+
+        { string username = t1;
+            CookieOptions options = new CookieOptions();
+            options.Expires = System.DateTime.Now.AddMinutes(30);
+			Response.Cookies.Append("username", username, options);
+
+            return View("createcookie");
+
+
+        }
+
+ (to remove cookie)
+       public IActionResult deletecookie()
+        { Response.Cookies.Delete("username");
+            return View("createcookie");
+           }
+
+    }
+}
+
+ for view:
+
+@model string
+@if(!string.IsNullOrEmpty(Model))
+{
+	<strong>
+		welcome:@Model
+	</strong>
+       @Html.ActionLink("removecookie","deletecookie")
+}
+else
+   {
+	@using(Html.BeginForm("createcookie","example"))
+   {
+	<label>enter your name</label>
+	<input type="text" name="t1"/><br/>
+    <input type="submit" value="createcookie"/>
+
+}
+}
+     
+for model class:
+
+namespace cg_mvc_core.Models
+{
+	public class citymodel
+	{    
+            public int value { get; set; }
+            public string text { get; set; }
+            public bool ischecked { get; set; }
+
+
+
+            public List<citymodel> cities { get; set; }
+        }
+    }
+
+
+program 14 done:
+for contoller:
+
+using cg_mvc_core.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+
+namespace cg_mvc_core.Controllers
+{
+    public class exampleController : Controller
+    {
+        public IActionResult dispcheck()
+        { return View();
+        }
+        [HttpPost]
+        public IActionResult dispcheck(citymodel obj, object v)
+        {
+            StringBuilder str = new StringBuilder();
+            foreach (var city in obj.cities)
+            { if (city.ischecked)
+                { str.Append(city.text + ",");
+                }
+            }
+
+            ViewData["jobloc"] = str;
+            return View("joblocation");
+        }
+        public IActionResult createcookie()
+        {
+            string username = Request.Cookies["username"];
+            return View("createcookie", username);
+        }
+
+        [HttpPost]
+        public IActionResult createcookie(string t1)
+
+        { string username = t1;
+            CookieOptions options = new CookieOptions();
+            options.Expires = System.DateTime.Now.AddMinutes(30);
+			Response.Cookies.Append("username", username, options);
+
+            return View("createcookie");
+
+
+        }
+        public IActionResult deletecookie()
+        { Response.Cookies.Delete("username");
+            return View("createcookie");
+
+        }
+        public IActionResult stdata()
+        {
+            HttpContext.Session.SetString("emp_details,", "e010,cccc,cv maker");
+            HttpContext.Session.SetInt32("pro_details ", 455667);
+            return View(); 
+        }
+        public IActionResult readdata()
+        {
+            ViewData["empdet"] = HttpContext.Session.GetString("emp_details");
+            ViewData["prodet"] = HttpContext.Session.GetString("pro_details");
+            return View();
+        }
+    }
+
+}
+
+for view:
+
+                                                                               <b>
+	                                                                       Sessiom Data<br/>
+	                                                                       employee details:@ViewData["empdet"]<br/>
+	                                                                       product details:@ViewData["prodet"]
+
+ @using(Html.BeginForm("readdata","example"))                                    </b>
+{<input type="submit" value="readsession"/>
+}      
+
+
+for program class  (+*)
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+builder.Services.AddSession();
+builder.Services.AddSession(options => { options.IdleTimeout = TimeSpan.FromMinutes(30); });
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseRouting();
+app.UseSession();
+
+app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
+
+
+eg program 15:---------------------------------------------------------------------------------------------------------------------
+for controller:
+
+using cg_mvc_core.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace cg_mvc_core.Controllers
+{
+    public class exampleController : Controller
+    {
+        public IActionResult form3()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult form3(logindata det)
+        {
+            if (ModelState.IsValid)
+            {
+               
+            }
+            return View();
+        }
+    }
+}
+
+for view:
+
+@model cg_mvc_core.Models.logindata
+
+<h2>Login Details</h2>
+
+@using (Html.BeginForm("form3", "Example", FormMethod.Post))
+{
+    <label>Enter first name</label>
+    @Html.TextBoxFor(x => x.firstname)
+    @*@Html.ValidationMessageFor(x => x.firstname)*@
+    <br />
+
+    <label>Enter lastname</label>
+    @Html.TextBoxFor(x => x.lastname)
+    @*@Html.ValidationMessageFor(x => x.lastname)*@
+    <br />
+
+    <label>Emailid</label>
+    @Html.TextBoxFor(x => x.EmailId)
+    @*@Html.ValidationMessageFor(x => x.EmailId)*@
+    <br />
+
+    <label>account number</label>
+     @Html.TextBoxFor(x => x.accountno)
+    @*@Html.ValidationMessageFor(x => x.accountno)*@
+    <br />
+
+    <label>contact number</label>
+     @Html.TextBoxFor(x => x.contactno)
+    @*@Html.ValidationMessageFor(x => x.contactno)*@
+    <br />
+
+
+    <input type="submit" value="Login" />
+    @Html.ValidationSummary(false);
+}
+
+for class:
+
+using System.ComponentModel.DataAnnotations;
+
+namespace cg_mvc_core.Models
+{
+	
+        public class logindata
+        {
+            [Required(ErrorMessage = "Please enter first name")]
+            public string firstname { get; set; }
+
+            [Required(ErrorMessage = "Please enter last name")]
+            public string lastname { get; set; }
+
+            [Required(ErrorMessage = "Please enter MailId")]
+            [EmailAddress(ErrorMessage = "Invalid MailId")]
+            public string EmailId { get; set; }
+
+        [Required(ErrorMessage = "Please enter acc no")]
+        [EmailAddress(ErrorMessage = "Invalid acc no")]
+        public double accountno{ get; set; }
+
+        [Required(ErrorMessage = "Please enter acc no")]
+        [EmailAddress(ErrorMessage = "Invalid acc no")]
+        public double contactno { get; set; }
+
+
+    }
+}
+
+
+
+
+
+
+                                                                          
